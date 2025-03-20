@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 public class FunctionPlot {
     //This will produce the plot points for the first 25 points of an exponential function
     public ArrayList<double[]> expFunc(int initialX){
@@ -17,7 +16,9 @@ public class FunctionPlot {
     public void csvWriter(ArrayList<double[]> plot) throws IOException{
         BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\domze\\OneDrive\\Desktop\\Plotnotes\\plot.txt"));
         for(double[] points : plot){
-            writer.append(Arrays.toString(points));
+            double x = points[0];
+            double y = points[1];
+            writer.append("x: " + x + " y: " + y + ",");
             writer.append("\n");
         }
         writer.close();
