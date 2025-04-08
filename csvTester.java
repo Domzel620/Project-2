@@ -5,7 +5,7 @@ public class csvTester {
     public static void main(String[] args) throws IOException {
         FunctionPlot function = new FunctionPlot();
         Salter salt = new Salter();
-        function.csvWriter(function.expFunc(0));
+        function.csvWriter(function.expFunc(0), "C:\\Users\\domze\\OneDrive\\Desktop\\Plotnotes\\plot.txt");
         salt.dataReader("C:\\Users\\domze\\OneDrive\\Desktop\\Plotnotes\\plot.txt");
     }
 }

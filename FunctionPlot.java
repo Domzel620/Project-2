@@ -13,8 +13,8 @@ public class FunctionPlot {
         return points;
     }
 
-    public void csvWriter(ArrayList<double[]> plot) throws IOException{
-        BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\domze\\OneDrive\\Desktop\\Plotnotes\\plot.txt"));
+    public void csvWriter(ArrayList<double[]> plot, String fileLocation) throws IOException{
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileLocation, false));
         for(double[] points : plot){
             double x = points[0];
             double y = points[1];
