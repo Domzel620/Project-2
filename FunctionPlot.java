@@ -13,7 +13,7 @@ public class FunctionPlot {
         return points;
     }
 
-    public void csvWriter(ArrayList<double[]> plot, String fileLocation) throws IOException{
+    public void csvOverWriter(ArrayList<double[]> plot, String fileLocation) throws IOException{
         BufferedWriter writer = new BufferedWriter(new FileWriter(fileLocation, false));
         for(double[] points : plot){
             double x = points[0];
@@ -22,6 +22,23 @@ public class FunctionPlot {
             writer.append("\n");
         }
         writer.close();
+    }
+    public void csvCreator(ArrayList<double[]> plot, String fileLocation) throws IOException{
+        File file = new File(fileLocation);
+        if(file.exists()){
+            System.out.println("Said file already exists!");
+        }else{
+            System.out.println("Creating new file! Location: " + fileLocation);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileLocation, false));
+        for(double[] points : plot){
+            double x = points[0];
+            double y = points[1];
+            writer.append("x: " + x + " y: " + y + ",");
+            writer.append("\n");
+        }
+        writer.close();
+        }
+        
     }
 
 
