@@ -77,7 +77,7 @@ public class ChartAppCreator {
                     }
                 }
             });
-
+//------------------------------------------------------------------------------------------------------------------Buttons------------------------------------------------------------------------------------------------------------------------------------------------------------
             //Code for the Graphing Button
             JButton button = new JButton("Graph");
             button.setFocusable(false);
@@ -102,15 +102,18 @@ public class ChartAppCreator {
                     }
                 }
             });
-            
+
             //Code for a data Salting button
             JButton saltButton = new JButton("Salt");
+                saltButton.setFocusable(false);
 
             //Code for a data smoothing button
             JButton smoothButton = new JButton("Smooth");
+                smoothButton.setFocusable(false);
 
             //Code for a Clear Graph Button
             JButton clearButton = new JButton("Clear");
+                clearButton.setFocusable(false);
                 clearButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e){
@@ -120,11 +123,14 @@ public class ChartAppCreator {
                         chart.repaint();
                     }
                 });
+//-------------------------------------------------------------------------------------------------------------------Panels-------------------------------------------------------------------------------------------------------------------------------------------------------
         //Adds button and text fields to a panel for use.
         JPanel controls = new JPanel();
             controls.add(new JLabel("Enter initial x-value: "));
             controls.add(initialX);
             controls.add(button);
+            controls.add(saltButton);
+            controls.add(smoothButton);
             controls.add(clearButton);
             controls.setSize(100, 100);
         window.add(controls, BorderLayout.SOUTH);
