@@ -10,10 +10,9 @@ public class FunctionPlot {
     public ArrayList<double[]> expFunc(double initialX){
         ArrayList<double[]> points = new ArrayList<>();
         double y;
-        for(double i = initialX; i < 25; i++){
+        for(double i = initialX; i < initialX+25; i++){
             y = Math.exp(i);
-            initialX = i;
-            points.add(new double[]{initialX,y});
+            points.add(new double[]{i,y});
         }
         return points;
     }
