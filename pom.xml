@@ -5,12 +5,26 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dominiczelinsky</groupId> <!-- Replace with your organization or project name -->
-    <artifactId>PSSProject</artifactId> <!-- Replace with your project name -->
-    <version>1.0-SNAPSHOT</version> <!-- Define the version of the project -->
-    <packaging>jar</packaging> <!-- Packaging type (jar, war, etc.) -->
+    <groupId>com.dominiczelinsky</groupId> 
+    <artifactId>PSSProject</artifactId> 
+    <version>1.0-SNAPSHOT</version> 
+    <packaging>jar</packaging> 
 
-    <!-- Dependencies section to add libraries -->
+    <build>
+        <plugins>
+           
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>17</source> 
+                    <target>17</target> 
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.jfree</groupId>
@@ -19,21 +33,5 @@
         </dependency>
 
     </dependencies>
-
-    <!-- Build section with compiler plugin configuration -->
-    <build>
-        <plugins>
-            <!-- Optional: Maven Compiler Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>17</source> <!-- Your Java version -->
-                    <target>17</target> <!-- Your Java version -->
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
