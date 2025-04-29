@@ -30,9 +30,15 @@ public class Salter {
 
     public ArrayList<double[]> salter(ArrayList<double[]> dataset){
         Random rand = new Random();
+        ArrayList<double[]> salted = new ArrayList();
         double bigNumba = 0;
+        for(double[] coords : dataset){
+            double x = coords[0];
+            double y = coords[1];
+            salted.add(new double[]{x,y});
+        }
         //This sets the range of the randomly salted y's to the biggest y value in the original dataset and 0;
-        for(double[] numbas : dataset){
+        for(double[] numbas : salted){
             double number = numbas[1];
 
             if(number > bigNumba){
@@ -40,13 +46,13 @@ public class Salter {
             }
         }
         //This has a 33% chance of changing the y value of the dataset for salting purposes
-        for(double[] points : dataset){
+        for(double[] points : salted){
             int coin = rand.nextInt(9)+1;
             if(coin <= 3){
                 points[1] = rand.nextDouble(bigNumba);
             }
         }
-        return dataset;
+        return salted;
     }
 
     public ArrayList<double[]> smoother(ArrayList<double[]> dataset, int windowValue){
