@@ -1,5 +1,9 @@
 package JavaPSSFIles;
-import java.io.*;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 public class FunctionPlot {
     //This will produce the plot points for the first 25 points of an exponential function

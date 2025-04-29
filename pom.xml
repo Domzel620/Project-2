@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.dominiczelinsky</groupId> <!-- Replace with your organization or project name -->
+    <artifactId>PSSProject</artifactId> <!-- Replace with your project name -->
+    <version>1.0-SNAPSHOT</version> <!-- Define the version of the project -->
+    <packaging>jar</packaging> <!-- Packaging type (jar, war, etc.) -->
+
+    <!-- Dependencies section to add libraries -->
+    <dependencies>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.3</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- Build section with compiler plugin configuration -->
+    <build>
+        <plugins>
+            <!-- Optional: Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>17</source> <!-- Your Java version -->
+                    <target>17</target> <!-- Your Java version -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
