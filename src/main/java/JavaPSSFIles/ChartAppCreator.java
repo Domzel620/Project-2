@@ -102,6 +102,13 @@ public class ChartAppCreator {
                     }
                 }
             });
+            
+            //Code for a data Salting button
+            JButton saltButton = new JButton("Salt");
+
+            //Code for a data smoothing button
+            JButton smoothButton = new JButton("Smooth");
+
             //Code for a Clear Graph Button
             JButton clearButton = new JButton("Clear");
                 clearButton.addActionListener(new ActionListener() {
@@ -113,6 +120,7 @@ public class ChartAppCreator {
                         chart.repaint();
                     }
                 });
+        //Adds button and text fields to a panel for use.
         JPanel controls = new JPanel();
             controls.add(new JLabel("Enter initial x-value: "));
             controls.add(initialX);
