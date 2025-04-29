@@ -60,7 +60,7 @@ public class ChartAppCreator {
                     FunctionPlot math = new FunctionPlot();
                     ArrayList<double[]> dataset = new ArrayList<>();
 
-                    if(initialX.getText() != null){
+                    try{
                         double x = Double.parseDouble(initialX.getText());
                         dataset = math.expFunc(x);
                         XYSeries newData = new XYSeries(title);
@@ -72,6 +72,8 @@ public class ChartAppCreator {
                         initialX.setText("");
                         chart.repaint();
                     
+                    }catch(NumberFormatException ex){
+                        System.out.println("Please enter a valid value!");
                     }
                 }
             });
@@ -86,7 +88,7 @@ public class ChartAppCreator {
                     FunctionPlot math = new FunctionPlot();
                     ArrayList<double[]> dataset = new ArrayList<>();
 
-                    if(initialX.getText() != null){
+                    try{
                         double x = Double.parseDouble(initialX.getText());
                         dataset = math.expFunc(x);
                         for(double[] coords : dataset){
@@ -95,6 +97,8 @@ public class ChartAppCreator {
                         System.out.println("Initial X-value: " + x);
                         initialX.setText("");
                         chart.repaint();
+                    } catch(NumberFormatException ex){
+                        System.out.println("Please enter a valid value!");
                     }
                 }
             });
