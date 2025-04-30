@@ -20,6 +20,6 @@ public class csvTester {
         function.csvCreator(smoothedData, "ProjectOutput\\smoothedDataOutPu.txt");
         charter.lineChartMaker(dataset, "BaseDataGraph", "ProjectOutput");
         charter.groupChartMaker(dataset, "Base Data", parsedData, "Salted Data", smoothedData, "Smoothed Data", "PSS Chart", "ProjectOutput");
-        app.graphApplication( "Test");
+        app.guiGraphTitleWindow();
     }
 }

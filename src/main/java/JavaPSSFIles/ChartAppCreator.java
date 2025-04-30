@@ -73,7 +73,6 @@ public class ChartAppCreator {
         JFrame window = new JFrame(title);
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             window.add(chart, BorderLayout.CENTER);
-            window.pack();
             window.setLocationRelativeTo(null);
             window.setVisible(true);
             window.setSize(1000, 1000);
@@ -148,7 +147,7 @@ public class ChartAppCreator {
                     }
                 }
             });
-
+//----------------------------------------------------------------------------------------Salting Functionality
             //Code for a data Salting button
             JButton saltButton = new JButton("Salt");
                 saltButton.setFocusable(false);
@@ -180,7 +179,10 @@ public class ChartAppCreator {
                         saltedData = dataset;
                     }
                 });
-            //Code for a data smoothing button
+//-------------------------------------------------------------------------------------------Smoothing Functionality
+            //Smoothing WindowValue Code
+            JTextField windowValue = new JTextField(5);
+            //Smoothing Button Code
             JButton smoothButton = new JButton("Smooth");
                 smoothButton.setFocusable(false);
                 smoothButton.addActionListener(new ActionListener(){
@@ -189,6 +191,7 @@ public class ChartAppCreator {
                         ArrayList<double[]> dataset = new ArrayList<>();
                         XYSeries smoothedSet = new XYSeries("Smoothed");
                         Salter salt = new Salter();
+                        int windowVal = Integer.parseInt(windowValue.getText());
 
                         for(int i = 0; i < groupData.getSeriesCount(); i++){//Checks to make sure a Smoothed set is not present on graph preventing error
                             if(groupData.getSeriesKey(i).equals("Smoothed")){
@@ -202,7 +205,7 @@ public class ChartAppCreator {
                             double y = graphingData.getY(i).doubleValue();
                             dataset.add(new double[]{x,y});
                         }
-                        dataset = salt.smoother(saltedData, 5);
+                        dataset = salt.smoother(saltedData, windowVal);
                         for(double[] coords : dataset){
                             smoothedSet.add(coords[0], coords[1]);
                         }
@@ -212,7 +215,8 @@ public class ChartAppCreator {
                         smoothedData = dataset;
                     }
                 });
-            //Code for a Clear Graph Button
+//---------------------------------------------------------------------------------------Clearing Functionality
+            //Clear button code
             JButton clearButton = new JButton("Clear");
                 clearButton.setFocusable(false);
                 clearButton.addActionListener(new ActionListener() {
@@ -243,8 +247,10 @@ public class ChartAppCreator {
             controls.add(initialX);
             controls.add(functionSelect);
             controls.add(button);
-            controls.add(saltButton);
-            controls.add(smoothButton);
+            controls.add(saltButton, BorderLayout.SOUTH);
+            controls.add(new JLabel("Enter a Window Value: "), BorderLayout.SOUTH);
+            controls.add(windowValue, BorderLayout.SOUTH);
+            controls.add(smoothButton, BorderLayout.SOUTH);
             controls.add(clearButton);
             controls.setSize(100, 100);
         window.add(controls, BorderLayout.SOUTH);
@@ -253,9 +259,11 @@ public class ChartAppCreator {
             exporter.add(export);
             exporter.setSize(75, 75);
         window.add(exporter, BorderLayout.EAST);
-
+        window.pack();
     }
 
+//----------------------------------------------------------------------------------------------Export Window Code-----------------------------------------------------------------------------------------------------
+    
     //Export Window method
     public void exportWindowPop(ArrayList<double[]> baseDataset, ArrayList<double[]> saltedDataset, ArrayList<double[]> smoothedDataset, String title){
         JFrame exportWindow = new JFrame("Export");
@@ -284,6 +292,7 @@ public class ChartAppCreator {
                         charter.groupChartApp(baseData, "Base", saltedData, "Salted", smoothedData, "Smoothed", "groupChart.png", directory);
                         System.out.println("Files exported to " + directory);
                         JOptionPane.showMessageDialog(null, "Files exported to: " + directory);
+                        exportWindow.dispose();
                     } catch (IOException ex) {
                         ex.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Failed to export files: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -305,6 +314,7 @@ public class ChartAppCreator {
                         File f = new File(directory);
                         if(!f.exists()){
                             f.mkdirs();
+                            System.out.println("Folder Created");
                         }  
                         writer.csvOverWriter(baseDataset, directory + File.separator + "base.txt");
                         writer.csvOverWriter(saltedDataset, directory + File.separator + "salted.txt");
@@ -312,9 +322,10 @@ public class ChartAppCreator {
                         charter.groupChartApp(baseData, "Base", saltedData, "Salted", smoothedData, "Smoothed", "groupChart.png" ,directory + File.separator);
                         System.out.println("Files exported to " + directory);
                         JOptionPane.showMessageDialog(null, "Files exported to: " + directory);
+                        exportWindow.dispose();
                     } catch (IOException ex) {
                         ex.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Failed to export files: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); // CHANGED
+                        JOptionPane.showMessageDialog(null, "Failed to export files: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
                     }
                 }
@@ -325,5 +336,59 @@ public class ChartAppCreator {
             exportFrame.add(fileLoc);
             exportFrame.add(export, BorderLayout.SOUTH);
         exportWindow.add(exportFrame);
+    }
+//---------------------------------------------------------------------------------------------------------------Graphing Title Code--------------------------------------------------------------------------
+    
+    //This window pops up before the graphing gui window does, it allows the user to give a title for their graph
+    public void guiGraphTitleWindow(){
+        JFrame titleWindow = new JFrame();
+            titleWindow.setLocationRelativeTo(null);
+            titleWindow.setVisible(true);
+            titleWindow.setSize(400, 200);
+
+        JTextField graphName = new JTextField(25);
+            graphName.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    try {
+                        String title = graphName.getText();
+                        if(title == null || title.isEmpty()){
+                            throw new IOException();
+                        }else{
+                            graphApplication(title);
+                            titleWindow.dispose();
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Please enter a valid name: "+ ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }      
+                }
+            });
+
+        JButton titleButton = new JButton("Start App");
+            titleButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    try {
+                        String title = graphName.getText();
+                        if(title == null || title.isEmpty()){
+                            throw new IOException();
+                        }else{
+                            graphApplication(title);
+                            titleWindow.dispose();
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Please enter a valid name: "+ ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }      
+                }
+            });
+            JPanel titlePanel = new JPanel();
+                titlePanel.add(new JLabel("Enter Graph/File Title"));
+                titlePanel.add(graphName);
+                titlePanel.add(titleButton, BorderLayout.SOUTH);
+            titleWindow.add(titlePanel);
+            titleWindow.pack();
+            
     }
 }
