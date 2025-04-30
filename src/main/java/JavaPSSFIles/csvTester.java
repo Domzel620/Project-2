@@ -18,8 +18,8 @@ public class csvTester {
         function.csvCreator(parsedData, "ProjectOutput\\newPlotOutPut.txt");
         ArrayList<double[]> smoothedData = salt.smoother(parsedData, 4);
         function.csvCreator(smoothedData, "ProjectOutput\\smoothedDataOutPu.txt");
-        charter.lineChartMaker(dataset, "BaseDataGraph");
-        charter.groupChartMaker(dataset, "Base Data", parsedData, "Salted Data", smoothedData, "Smoothed Data", "PSS Chart");
+        charter.lineChartMaker(dataset, "BaseDataGraph", "ProjectOutput");
+        charter.groupChartMaker(dataset, "Base Data", parsedData, "Salted Data", smoothedData, "Smoothed Data", "PSS Chart", "ProjectOutput");
         app.graphApplication( "Test");
     }
 }

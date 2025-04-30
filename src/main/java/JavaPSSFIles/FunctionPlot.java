@@ -17,6 +17,16 @@ public class FunctionPlot {
         return points;
     }
 
+    public ArrayList<double[]> logFunc(double initialX){
+        ArrayList<double[]> points = new ArrayList<>();
+        
+        for(double i = initialX; i < initialX+25; i++){
+           double y = Math.log(i);
+           points.add(new double[]{i,y});
+        }
+        return points;
+    }
+
     public void csvOverWriter(ArrayList<double[]> plot, String fileLocation) throws IOException{
         BufferedWriter writer = new BufferedWriter(new FileWriter(fileLocation, false));
         for(double[] points : plot){

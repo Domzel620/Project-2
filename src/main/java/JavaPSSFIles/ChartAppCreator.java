@@ -6,12 +6,15 @@ import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -29,8 +32,12 @@ public class ChartAppCreator {
         private JFreeChart scatter;
         private XYSeries graphingData;
         private ArrayList<double[]> saltedData;
+        private ArrayList<double[]> smoothedData;
+        private ArrayList<double[]> baseData;
         public ChartAppCreator(){
             saltedData = new ArrayList<>();
+            smoothedData = new ArrayList<>();
+            baseData = new ArrayList<>();
         }
     public void graphApplication( String title){
         ArrayList<double[]> dataset = new ArrayList<>();
@@ -98,10 +105,11 @@ public class ChartAppCreator {
                     }
                 }
             });
-
-            String[] functions = {"Exponential"};
+            //This provides a dropdown menu letting you choose which function you want to graph
+            String[] functions = {"Exponential", "Logarithmic"};
             JComboBox functionSelect = new JComboBox<>(functions);
-//------------------------------------------------------------------------------------------------------------------Buttons------------------------------------------------------------------------------------------------------------------------------------------------------------
+            functionSelect.setToolTipText("Select your graphing function");
+//------------------------------------------------------------------------------------------------------------------Control Buttons------------------------------------------------------------------------------------------------------------------------------------------------------------
             //Code for the Graphing Button
             JButton button = new JButton("Graph");
             button.setFocusable(false);
@@ -114,13 +122,27 @@ public class ChartAppCreator {
 
                     try{
                         double x = Double.parseDouble(initialX.getText());
-                        dataset = math.expFunc(x);
+                        String function = (String) functionSelect.getSelectedItem();
+                        graphingData.clear();
+                        groupData.removeAllSeries();
+                        switch(function){
+                            case "Exponential":           
+                                dataset = math.expFunc(x);
+                                break;
+                            case "Logarithmic":
+                                dataset = math.logFunc(x);
+                                break;
+                            default:
+                                System.out.println("Please select a function!");
+                        }
                         for(double[] coords : dataset){
                             graphingData.add(coords[0],coords[1]);
                         } 
+                        groupData.addSeries(graphingData);
                         System.out.println("Initial X-value: " + x);
                         initialX.setText("");
                         chart.repaint();
+                        baseData = dataset;
                     } catch(NumberFormatException ex){
                         System.out.println("Please enter a valid value!");
                     }
@@ -187,7 +209,7 @@ public class ChartAppCreator {
                         groupData.addSeries(smoothedSet);
                         System.out.println("Smoothed dataset");
                         chart.repaint();
-                        
+                        smoothedData = dataset;
                     }
                 });
             //Code for a Clear Graph Button
@@ -205,6 +227,15 @@ public class ChartAppCreator {
                         chart.repaint();
                     }
                 });
+//---------------------------------------------------------------------------------------------------------------Export Buttons---------------------------------------------------------------------------------------------------------------------------------------------------
+            JButton export = new JButton("Export");
+                export.setFocusable(false);
+                export.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                        exportWindowPop(baseData, saltedData, smoothedData, title);
+                    }
+                });
 //-------------------------------------------------------------------------------------------------------------------Panels-------------------------------------------------------------------------------------------------------------------------------------------------------
         //Adds button and text fields to a panel for use.
         JPanel controls = new JPanel();
@@ -217,5 +248,82 @@ public class ChartAppCreator {
             controls.add(clearButton);
             controls.setSize(100, 100);
         window.add(controls, BorderLayout.SOUTH);
+
+        JPanel exporter = new JPanel();
+            exporter.add(export);
+            exporter.setSize(75, 75);
+        window.add(exporter, BorderLayout.EAST);
+
+    }
+
+    //Export Window method
+    public void exportWindowPop(ArrayList<double[]> baseDataset, ArrayList<double[]> saltedDataset, ArrayList<double[]> smoothedDataset, String title){
+        JFrame exportWindow = new JFrame("Export");
+            exportWindow.pack();
+            exportWindow.setLocationRelativeTo(null);
+            exportWindow.setVisible(true);
+            exportWindow.setSize(400, 200);
+        
+        JTextField fileLoc = new JTextField(25);
+            fileLoc.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    FunctionPlot writer = new FunctionPlot();
+                    String file = fileLoc.getText();
+                    ChartImgCreator charter = new ChartImgCreator();
+                    try {
+                        String directory = file + File.separator + title;
+                        
+                        File f = new File(directory);
+                        if(!f.exists()){
+                            f.mkdirs();
+                        }  
+                        writer.csvOverWriter(baseDataset, directory + File.separator + "base");
+                        writer.csvOverWriter(saltedDataset, directory + File.separator + "salted");
+                        writer.csvOverWriter(smoothedDataset, directory + File.separator + "smoothed");
+                        charter.groupChartApp(baseData, "Base", saltedData, "Salted", smoothedData, "Smoothed", "groupChart.png", directory);
+                        System.out.println("Files exported to " + directory);
+                        JOptionPane.showMessageDialog(null, "Files exported to: " + directory);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Failed to export files: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        JButton export = new JButton("Export");
+            export.setFocusable(false);
+            export.setToolTipText("Click to export your data");
+            export.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    FunctionPlot writer = new FunctionPlot();
+                    ChartImgCreator charter = new ChartImgCreator();
+                    String file = fileLoc.getText();
+                    try {
+                        String directory = file + File.separator + title;
+                        
+                        File f = new File(directory);
+                        if(!f.exists()){
+                            f.mkdirs();
+                        }  
+                        writer.csvOverWriter(baseDataset, directory + File.separator + "base.txt");
+                        writer.csvOverWriter(saltedDataset, directory + File.separator + "salted.txt");
+                        writer.csvOverWriter(smoothedDataset, directory + File.separator + "smoothed.txt");
+                        charter.groupChartApp(baseData, "Base", saltedData, "Salted", smoothedData, "Smoothed", "groupChart.png" ,directory + File.separator);
+                        System.out.println("Files exported to " + directory);
+                        JOptionPane.showMessageDialog(null, "Files exported to: " + directory);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Failed to export files: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); // CHANGED
+
+                    }
+                }
+            });
+
+        JPanel exportFrame = new JPanel();
+            exportFrame.add(new JLabel("Enter File Location"));
+            exportFrame.add(fileLoc);
+            exportFrame.add(export, BorderLayout.SOUTH);
+        exportWindow.add(exportFrame);
     }
 }
