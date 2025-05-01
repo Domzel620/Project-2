@@ -249,7 +249,7 @@ public class ChartAppCreator {
                         chart.repaint();//Repaints a blank graph
                     }
                 });
-//--------------------------------------------------------------------------------------------------------------------------------------------------------Export Buttons
+//--------------------------------------------------------------------------------------------------------------------------------------------------------Export Button
             JButton export = new JButton("Export");//This export button calls the Export window method, creating a new window for the exporting process
                 export.setFocusable(false);
                 export.addActionListener(new ActionListener() {
