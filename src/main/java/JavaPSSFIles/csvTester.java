@@ -11,13 +11,14 @@ public class csvTester {
         Salter salt = new Salter();
         ChartImgCreator charter = new ChartImgCreator();
         ChartAppCreator app = new ChartAppCreator();
+        DataHandler handler = new DataHandler();
 
-        function.csvOverWriter(function.expFunc(0), "ProjectOutput\\plotOutPut.txt");
-        ArrayList<double[]> dataset = salt.dataReader("ProjectOutput\\plotOutPut.txt");
+        handler.csvOverWriter(function.expFunc(0), "ProjectOutput\\plotOutPut.csv");
+        ArrayList<double[]> dataset = handler.dataReader("ProjectOutput\\plotOutPut.csv");
         ArrayList<double[]> parsedData = salt.salter(dataset);
-        function.csvCreator(parsedData, "ProjectOutput\\newPlotOutPut.txt");
+        handler.csvCreator(parsedData, "ProjectOutput\\newPlotOutPut.csv");
         ArrayList<double[]> smoothedData = salt.smoother(parsedData, 4);
-        function.csvCreator(smoothedData, "ProjectOutput\\smoothedDataOutPu.txt");
+        handler.csvCreator(smoothedData, "ProjectOutput\\smoothedDataOutPu.csv");
         charter.lineChartMaker(dataset, "BaseDataGraph", "ProjectOutput");
         charter.groupChartMaker(dataset, "Base Data", parsedData, "Salted Data", smoothedData, "Smoothed Data", "PSS Chart", "ProjectOutput");
         app.guiGraphTitleWindow();
