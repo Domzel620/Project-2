@@ -41,21 +41,21 @@ public class ChartAppCreator {
         }
     public void graphApplication( String title){
         ArrayList<double[]> dataset = new ArrayList<>();
-        graphingData = new XYSeries(title);
-        for(double[] coords : dataset){
+        graphingData = new XYSeries("Base Data");//Creates the base dataset series
+        for(double[] coords : dataset){//iterates through the dataset and adds the coordinates to the graphing data series
             graphingData.add(coords[0],coords[1]);
         } 
         //Creates a Series Collection for graphing multiple datasets
         XYSeriesCollection groupData = new XYSeriesCollection();
         groupData.addSeries(graphingData);
 
-        scatter = ChartFactory.createXYLineChart(title, "X-Coordinates", "Y-Coordinates", groupData, PlotOrientation.VERTICAL, true, true, false);
+        scatter = ChartFactory.createXYLineChart(title, "X-Coordinates", "Y-Coordinates", groupData, PlotOrientation.VERTICAL, true, true, false);//Creates the scatter plot
 
         //Creates the chart panel using our scatter plot chart
         ChartPanel chart = new ChartPanel(scatter);
         chart.setPreferredSize(new java.awt.Dimension(600, 400));
 
-        XYPlot plot = scatter.getXYPlot();
+        XYPlot plot = scatter.getXYPlot();//creates the plot
 
         XYLineAndShapeRenderer design = new XYLineAndShapeRenderer();//This block of code determines the characteristics of the line graph
             design.setSeriesPaint(0, Color.black);//Affects Base data plotting
@@ -249,7 +249,7 @@ public class ChartAppCreator {
                         chart.repaint();//Repaints a blank graph
                     }
                 });
-//---------------------------------------------------------------------------------------------------------------Export Buttons---------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------Export Buttons
             JButton export = new JButton("Export");//This export button calls the Export window method, creating a new window for the exporting process
                 export.setFocusable(false);
                 export.addActionListener(new ActionListener() {
@@ -258,7 +258,7 @@ public class ChartAppCreator {
                         exportWindowPop(baseData, saltedData, smoothedData, title);//Intakes the datasets, and title of the graph for Folder and File creation
                     }
                 });
-//-------------------------------------------------------------------------------------------------------------------Panels-------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------Panels
         //Adds button and text fields to a panel for use.
         JPanel controls = new JPanel();//Adds all of the buttons and text fields used for graphing, salting, and smoothing functionalitys to a panel withing the application window
             controls.add(new JLabel("Enter initial x-value: "));
@@ -280,7 +280,7 @@ public class ChartAppCreator {
         window.pack();//This compacts all previous additions to the window making it pop up and fit properly into the application window for user usage
     }
 
-//----------------------------------------------------------------------------------------------Export Window Code-----------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------Export Window Code----------------------------------------------------------------------------------------------------------------------------------------------------
     
     //Export Window method
     public void exportWindowPop(ArrayList<double[]> baseDataset, ArrayList<double[]> saltedDataset, ArrayList<double[]> smoothedDataset, String title){
