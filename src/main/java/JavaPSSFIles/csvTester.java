@@ -5,13 +5,16 @@ package JavaPSSFIles;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ExtraCredit.GraphTitleWindow;
+
 public class csvTester {
     public static void main(String[] args) throws IOException {
         FunctionPlot function = new FunctionPlot();//Creates Objects for the needed classes
         Salter salt = new Salter();
         ChartImgCreator charter = new ChartImgCreator();
-        ChartAppCreator app = new ChartAppCreator();
         DataHandler handler = new DataHandler();
+        //ExtraCredit
+        GraphTitleWindow app = new GraphTitleWindow();
 
         handler.csvOverWriter(function.expFunc(0), "ProjectOutput\\plotOutPut.csv");//Calls the exponent function within he csvOverwriter function and saves it to the inputted file path
         ArrayList<double[]> parsedData = handler.dataReader("ProjectOutput\\plotOutPut.csv");//Sets parsedData to the parsed dataset produced by dataReader

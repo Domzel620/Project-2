@@ -1,4 +1,4 @@
-package JavaPSSFIles;
+package ExtraCredit;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -6,8 +6,6 @@ import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -26,6 +24,9 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+
+import JavaPSSFIles.FunctionPlot;
+import JavaPSSFIles.Salter;
 
 
 public class ChartAppCreator {
@@ -255,7 +256,8 @@ public class ChartAppCreator {
                 export.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e){
-                        exportWindowPop(baseData, saltedData, smoothedData, title);//Intakes the datasets, and title of the graph for Folder and File creation
+                        ExportWindow export = new ExportWindow();
+                        export.exportWindowPop(baseData, saltedData, smoothedData, title);//Intakes the datasets, and title of the graph for Folder and File creation
                     }
                 });
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------Panels
@@ -279,131 +281,5 @@ public class ChartAppCreator {
         window.add(exporter, BorderLayout.EAST);//Adds exporter panel to the right side of the application window/JFrame 
         window.pack();//This compacts all previous additions to the window making it pop up and fit properly into the application window for user usage
     }
-
-//----------------------------------------------------------------------------------------------Export Window Code----------------------------------------------------------------------------------------------------------------------------------------------------
-    
-    //Export Window method
-    public void exportWindowPop(ArrayList<double[]> baseDataset, ArrayList<double[]> saltedDataset, ArrayList<double[]> smoothedDataset, String title){
-        JFrame exportWindow = new JFrame("Export");//Creates the JFrame/window for the Exporting pop process
-            exportWindow.pack();
-            exportWindow.setLocationRelativeTo(null);
-            exportWindow.setVisible(true);
-            exportWindow.setSize(400, 200);
-        
-        JTextField fileLoc = new JTextField(25);//Text field for the user to input intended Filepath for exporting their data and graph
-            fileLoc.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    String file = fileLoc.getText();
-                    ChartImgCreator charter = new ChartImgCreator();
-                    DataHandler writer = new DataHandler();
-                    try {
-                        String directory = file + File.separator + title;//Sets the directory string equal to the FilePath input from fileLoc JTextField and adds the graph title to the end of it. 
-                                                                         //The graph title will be the name of the folder holding the data csvs and graph png
-                        File f = new File(directory);//Gives the new file a File Path
-                        if(!f.exists()){//Checks to see if the Folder already exists, if it does it will just store the files within the pre-existing folder
-                            f.mkdirs();//If it doesn't exist it will create the new folder to hold the data
-                            System.out.println("Folder Created!");
-                        }  
-                        writer.csvOverWriter(baseDataset, directory + File.separator + "base.csv");//the writer lines create a csv file for the baseData, saltedData, and smoothedData datasets
-                        writer.csvOverWriter(saltedDataset, directory + File.separator + "salted.csv");
-                        writer.csvOverWriter(smoothedDataset, directory + File.separator + "smoothed.csv");
-                        charter.groupChartApp(baseData, "Base", saltedData, "Salted", smoothedData, "Smoothed", "groupChart.png", directory);//Creates a Chart PNG for the graphed datasets
-                        System.out.println("Files exported to " + directory);
-                        JOptionPane.showMessageDialog(exportWindow, "Files exported to: " + directory);//Creates a pop up window showing the filepath of the newly exporting folder
-                        exportWindow.dispose();//Closes the window once the exporting process is complete
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(exportWindow, "Failed to export files: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);//Creates a pop up window if the export process fails, typically due to incorrect File Path
-                    }
-                }
-            });
-        JButton export = new JButton("Export");//Creates the Export button
-            export.setFocusable(false);
-            export.setToolTipText("Click to export your data");
-            export.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    String file = fileLoc.getText();
-                    ChartImgCreator charter = new ChartImgCreator();
-                    DataHandler writer = new DataHandler();
-                    try {
-                        String directory = file + File.separator + title;//Sets the directory string equal to the FilePath input from fileLoc JTextField and adds the graph title to the end of it. 
-                                                                         //The graph title will be the name of the folder holding the data csvs and graph png
-                        File f = new File(directory);//Gives the new file a File Path
-                        if(!f.exists()){//Checks to see if the Folder already exists, if it does it will just store the files within the pre-existing folder
-                            f.mkdirs();//If it doesn't exist it will create the new folder to hold the data
-                            System.out.println("Folder Created!");
-                        }  
-                        writer.csvOverWriter(baseDataset, directory + File.separator + "base.csv");//the writer lines create a csv file for the baseData, saltedData, and smoothedData datasets
-                        writer.csvOverWriter(saltedDataset, directory + File.separator + "salted.csv");
-                        writer.csvOverWriter(smoothedDataset, directory + File.separator + "smoothed.csv");
-                        charter.groupChartApp(baseData, "Base", saltedData, "Salted", smoothedData, "Smoothed", "groupChart.png", directory);//Creates a Chart PNG for the graphed datasets
-                        System.out.println("Files exported to " + directory);
-                        JOptionPane.showMessageDialog(exportWindow, "Files exported to: " + directory);//Creates a pop up window showing the filepath of the newly exporting folder
-                        exportWindow.dispose();//Closes the window once the exporting process is complete
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(exportWindow, "Failed to export files: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);//Creates a pop up window if the export process fails, typically due to incorrect File Path
-                    }
-                }
-            });
-
-        JPanel exportPanel = new JPanel();//Creates the Panel for the fileLoc Text Field and Export button to to be added to
-            exportPanel.add(new JLabel("Enter File Location"));
-            exportPanel.add(fileLoc);
-            exportPanel.add(export, BorderLayout.SOUTH);
-        exportWindow.add(exportPanel);//Adds the exportPanel panel to the exportWindow JFrame
-        exportWindow.pack();//This compacts all previous additions to the window making it pop up and fit properly into the application window for user usage
-    }
-//---------------------------------------------------------------------------------------------------------------Graphing Title Code--------------------------------------------------------------------------
-    
-    //This window pops up before the graphing gui window does, it allows the user to give a title for their graph
-    public void guiGraphTitleWindow(){
-        JFrame titleWindow = new JFrame();//Creates the JFrame/window for the graph title creation method
-            titleWindow.setLocationRelativeTo(null);
-            titleWindow.setVisible(true);
-            titleWindow.setSize(400, 200);
-
-        JTextField graphName = new JTextField(25);// Creates a Textfield for the User to input their graph name.
-            graphName.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    try {
-                        String title = graphName.getText();
-                        if(title.isEmpty()){//Checks to see if the graph name box is empty
-                            throw new IOException();//If empty throw the IOException
-                        }else{//If it isn't empty it calls the graphing application function and closes the title window
-                            graphApplication(title);
-                            titleWindow.dispose();
-                        }
-                    } catch (IOException ex) {//If Exception is thrown it creates a pop up window asking the user to enter a valid name
-                        JOptionPane.showMessageDialog(titleWindow, "Please enter a valid name: "+ ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }      
-                }
-            });
-
-        JButton titleButton = new JButton("Start App");//Creates a button to start the graphing application once a title has been typed
-            titleButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    try {
-                        String title = graphName.getText();
-                        if(title.isEmpty()){//Checks to see if the graph name box is empty
-                            throw new IOException();//If empty throw the IOException
-                        }else{//If it isn't empty it calls the graphing application function and closes the title window
-                            graphApplication(title);
-                            titleWindow.dispose();//Closes the title window once the app starts up
-                        }
-                    } catch (IOException ex) {//If Exception is thrown it creates a pop up window asking the user to enter a valid name
-                        JOptionPane.showMessageDialog(titleWindow, "Please enter a valid name: "+ ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }      
-                }
-            });
-            JPanel titlePanel = new JPanel();//Creates the Panel that contains the Text field and button for adding a title and starting the app
-                titlePanel.add(new JLabel("Enter Graph/File Title"));
-                titlePanel.add(graphName);
-                titlePanel.add(titleButton, BorderLayout.SOUTH);
-            titleWindow.add(titlePanel);//Adds the TitlePanel to the Title Window JFrame
-            titleWindow.pack();//This compacts all previous additions to the window making it pop up and fit properly into the application window for user usage
-            
-    }
 }
+
