@@ -89,15 +89,19 @@ public class ChartAppCreator {
                 public void actionPerformed(ActionEvent e){
                     FunctionPlot math = new FunctionPlot();
                     ArrayList<double[]> dataset = new ArrayList<>();
-
                     try{
                         double x = Double.parseDouble(initialX.getText());
                         String function = (String) functionSelect.getSelectedItem();
                         graphingData.clear();
                         groupData.removeAllSeries();
                         switch(function){//Creates a switch case checking for which function is selected in the dropdown menu
-                            case "Exponential":           
-                                dataset = math.expFunc(x);
+                            case "Exponential": //Creates a popup window to enter an exponent
+                                String expInput = JOptionPane.showInputDialog(null, "Enter an exponent:", "Exponent Selection", JOptionPane.PLAIN_MESSAGE);
+                                if (expInput == null || expInput.trim().isEmpty()) {//Checks to make sure the exponent input isn't empty
+                                    return;
+                                }
+                                    int exp = Integer.parseInt(expInput.trim());
+                                    dataset = math.expFunc(x, exp);
                                 break;
                             case "Logarithmic":
                                 dataset = math.logFunc(x);
@@ -128,15 +132,19 @@ public class ChartAppCreator {
                 public void actionPerformed(ActionEvent e){
                     FunctionPlot math = new FunctionPlot();
                     ArrayList<double[]> dataset = new ArrayList<>();
-
                     try{
                         double x = Double.parseDouble(initialX.getText());
                         String function = (String) functionSelect.getSelectedItem();
                         graphingData.clear();
                         groupData.removeAllSeries();
                         switch(function){//Creates a switch case checking for which function is selected in the dropdown menu
-                            case "Exponential":           
-                                dataset = math.expFunc(x);
+                            case "Exponential": //Creates a popup window to enter an exponent value
+                                String expInput = JOptionPane.showInputDialog(null, "Enter an exponent:", "Exponent Selection", JOptionPane.PLAIN_MESSAGE);
+                                if (expInput == null || expInput.trim().isEmpty()) {//Checks to make sure the exponent isn't empty
+                                    return;
+                                }
+                                    int exp = Integer.parseInt(expInput.trim());
+                                    dataset = math.expFunc(x, exp);
                                 break;
                             case "Logarithmic":
                                 dataset = math.logFunc(x);
