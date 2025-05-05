@@ -1,5 +1,5 @@
 %%This is the script written bty following the MatlabTutorial by
-% Jousef Murad | Deep Dive, following his video https://youtu.be/tBWMn4y1Yfo?si=DfiSw2iSuqyKGH9Q
+% Jousef Murad | Deep Dive, following this video https://youtu.be/tBWMn4y1Yfo?si=DfiSw2iSuqyKGH9Q
 % Dominic Zelinsky - April 2025
 
 %3 Magic Cs
