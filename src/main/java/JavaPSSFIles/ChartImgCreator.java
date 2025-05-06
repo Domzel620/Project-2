@@ -31,7 +31,7 @@ public class ChartImgCreator {
         int height = 1500;
 
         try {
-            ChartUtils.saveChartAsPNG(new File("ProjectOutput\\" + title + ".png"), scatter, height, width);//outputs the previously created chart and saves it to the user inputted filepath
+            ChartUtils.saveChartAsPNG(new File(file+"\\" + title + ".png"), scatter, height, width);//outputs the previously created chart and saves it to the user inputted filepath
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class ChartImgCreator {
         int height = 1500;
 
         try {
-            ChartUtils.saveChartAsPNG(new File("ProjectOutput\\" + title + ".png"), scatter, height, width);//outputs the previously created chart and saves it to the user inputted filepath
+            ChartUtils.saveChartAsPNG(new File(file + "\\" + title + ".png"), scatter, height, width);//outputs the previously created chart and saves it to the user inputted filepath
         } catch (IOException e) {
             e.printStackTrace();
         }
