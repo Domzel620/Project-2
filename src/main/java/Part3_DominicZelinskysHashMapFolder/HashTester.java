@@ -13,10 +13,10 @@ public class HashTester {
         PokemonHasher pokeHasher = new PokemonHasher();
         DominicZelinskyHashMap<String> domsHashMap = new DominicZelinskyHashMap<>();
         ArrayList<String[]> pokeArray = new ArrayList<>();
-        race.hashRace("Part-2Contents\\pokemon_cards.csv");
+        race.hashRace("WriteUps\\Part-2Contents\\pokemon_cards.csv");
 
         
-        pokeArray = pokeReader.readPokemonCSV("Part-2Contents\\pokemon_cards.csv");
+        pokeArray = pokeReader.readPokemonCSV("WriteUps\\Part-2Contents\\pokemon_cards.csv");
         domsHashMap = pokeHasher.hashPokemon(pokeArray);
         System.out.println(domsHashMap.getCollisions() + " PokeHash Collisions");
     }
