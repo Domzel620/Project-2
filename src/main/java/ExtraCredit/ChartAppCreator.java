@@ -25,8 +25,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import JavaPSSFIles.FunctionPlot;
-import JavaPSSFIles.Salter;
+import Part1_JavaPSSFIles.FunctionPlot;
+import Part1_JavaPSSFIles.Salter;
 
 
 public class ChartAppCreator {

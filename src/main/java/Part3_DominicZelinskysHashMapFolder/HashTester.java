@@ -1,4 +1,4 @@
-package DominicZelinskysHashMapFolder;
+package Part3_DominicZelinskysHashMapFolder;
 
 
 import java.io.IOException;

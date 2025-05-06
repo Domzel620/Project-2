@@ -1,4 +1,4 @@
-package JavaPSSFIles;
+package Part1_JavaPSSFIles;
 
 import java.util.ArrayList;
 public class FunctionPlot {
