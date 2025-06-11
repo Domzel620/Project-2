@@ -28,7 +28,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import Part1_JavaPSSFIles.FunctionPlot;
 import Part1_JavaPSSFIles.Salter;
 
-
+// HELOOOOOOOOOOOOOOOOOOOOOOOOooooo
 public class ChartAppCreator {
         private JFreeChart scatter;
         private XYSeries graphingData;
